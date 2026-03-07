@@ -13,4 +13,4 @@ Thumbs.db
 node_modules/
 
 # Maven
-backend/espelita/target/
+backend/target/
