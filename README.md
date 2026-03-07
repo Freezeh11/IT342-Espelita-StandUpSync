@@ -1,7 +1,7 @@
-# StandUp Sync
+# StandUpSync
 
 ## Project Description
-**StandUp Sync** is a web-based application designed for efficient data management and user authentication. It features a robust full-stack architecture focusing on secure user registration, hashed credential storage, and protected dashboard access.
+**StandUpSync** is a web-based application designed for efficient data management and user authentication. It features a robust full-stack architecture focusing on secure user registration, hashed credential storage, and protected dashboard access.
 
 ## Technologies Used
 * **Frontend:** React.js (Vite), React Router.
