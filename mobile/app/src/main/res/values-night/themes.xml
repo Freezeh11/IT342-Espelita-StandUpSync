@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.StandupSync" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_accent</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/card_bg</item>
+        <item name="colorSurface">@color/dark_bg</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:windowBackground">@color/dark_bg</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:navigationBarColor">@color/dark_bg</item>
+    </style>
+</resources>
