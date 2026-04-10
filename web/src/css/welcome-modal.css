@@ -1,0 +1,121 @@
+.welcome-modal__overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 1, 13, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: welcomeFadeIn 0.3s ease;
+}
+
+@keyframes welcomeFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes welcomeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.welcome-modal__card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 48px 56px;
+    backdrop-filter: blur(16px);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    animation: welcomeSlideUp 0.4s ease 0.1s both;
+}
+
+.welcome-modal__icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+.welcome-modal__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 8px 0;
+}
+
+.welcome-modal__highlight {
+    color: #9d80ff;
+}
+
+.welcome-modal__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #8a8891;
+    margin: 0 0 28px 0;
+}
+
+.welcome-modal__input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+}
+
+.welcome-modal__input:focus {
+    border-color: rgba(157, 128, 255, 0.5);
+}
+
+.welcome-modal__input::placeholder {
+    color: #555;
+}
+
+.welcome-modal__btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.welcome-modal__btn--active {
+    background: #fff;
+    color: #000;
+}
+
+.welcome-modal__btn--active:hover {
+    background: #e8e8e8;
+}
+
+.welcome-modal__btn--disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: #555;
+    cursor: not-allowed;
+}

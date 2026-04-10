@@ -6,7 +6,6 @@
     android:background="@drawable/galaxy_background"
     android:orientation="vertical">
 
-    <!-- Toolbar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
@@ -39,8 +38,8 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Profile pill (username + avatar) -->
         <LinearLayout
+            android:id="@+id/profileArea"
             android:layout_width="wrap_content"
             android:layout_height="38dp"
             android:background="@drawable/galaxy_profile_pill"
@@ -55,7 +54,7 @@
                 android:layout_marginEnd="8dp">
 
                 <TextView
-                    android:id="@+id/tvAvatarSmall"
+                    android:id="@+id/tvAvatarLetter"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/avatar_circle"
@@ -74,74 +73,70 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Body -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="20dp">
 
-        <!-- Welcome card -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/galaxy_card"
             android:orientation="vertical"
-            android:padding="28dp">
+            android:padding="20dp"
+            android:layout_marginBottom="16dp">
 
-            <!-- Big avatar -->
-            <FrameLayout
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dashboard"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:id="@+id/btnAddProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvAvatarLetter"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:background="@drawable/avatar_circle_large"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textColor="@color/purple_accent"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="6dp" />
 
-            <!-- Welcome message -->
-            <TextView
-                android:id="@+id/tvWelcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
-                android:text="Welcome back!"
-                android:textColor="@color/text_primary"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <!-- Email -->
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="28dp"
-                android:textColor="@color/text_secondary"
-                android:textSize="14sp" />
-
-            <!-- Logout Button -->
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/btn_purple_pill"
-                android:text="Logout"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD PROJECT"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.08" />
+            </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvEmptyState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="32dp"
+            android:text="No projects yet. Tap + ADD PROJECT to get started."
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <!-- Project List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProjects"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </LinearLayout>
