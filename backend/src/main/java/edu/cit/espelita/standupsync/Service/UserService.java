@@ -1,7 +1,9 @@
 package edu.cit.espelita.standupsync.Service;
 
 import edu.cit.espelita.standupsync.Entity.User;
+import edu.cit.espelita.standupsync.Entity.UserProfile;
 import edu.cit.espelita.standupsync.Repository.UserRepository;
+import edu.cit.espelita.standupsync.Repository.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserProfileRepository userProfileRepository;
 
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,13 +46,30 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
-    public User updateCurrentUser(String currentUsername, String newUsername, String newEmail,
+    public String getProfilePic(User user) {
+        return userProfileRepository.findByUser(user)
+                .map(UserProfile::getProfilePic)
+                .orElse(null);
+    }
+
+    public void updateProfilePic(User user, String profilePic) {
+        UserProfile profile = userProfileRepository.findByUser(user)
+                .orElseGet(() -> {
+                    UserProfile p = new UserProfile();
+                    p.setUser(user);
+                    return p;
+                });
+        profile.setProfilePic(profilePic);
+        userProfileRepository.save(profile);
+    }
+
+    public User updateCurrentUser(String currentUsername, String displayName, String newEmail,
             String currentPassword, String newPassword) {
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (newUsername != null && !newUsername.isBlank()) {
-            user.setUsername(newUsername);
+        if (displayName != null) {
+            user.setDisplayName(displayName.isBlank() ? null : displayName);
         }
         if (newEmail != null && !newEmail.isBlank()) {
             user.setEmail(newEmail);

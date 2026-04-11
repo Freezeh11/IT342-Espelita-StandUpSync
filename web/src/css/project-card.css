@@ -1,0 +1,61 @@
+.project-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-card:hover {
+    background: rgba(157, 128, 255, 0.08);
+    border-color: rgba(157, 128, 255, 0.4);
+}
+
+.project-card__title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+    margin: 0;
+}
+
+.project-card__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.project-card__stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.project-card__stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.project-card__stat-value {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.project-card__color--inProgress {
+    color: #9d80ff;
+}
+
+.project-card__color--blocker {
+    color: #ff5959;
+}
+
+.project-card__color--done {
+    color: #4cff91;
+}

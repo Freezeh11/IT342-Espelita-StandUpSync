@@ -1,0 +1,204 @@
+.dashboard__wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at top right, #130a24 0%, #05010d 100%);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.dashboard__loading {
+    padding: 40px;
+}
+
+.dashboard__navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(5, 1, 13, 0.5);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.dashboard__logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.dashboard__logo-highlight {
+    color: #9d80ff;
+}
+
+.dashboard__profile-area {
+    position: relative;
+}
+
+.dashboard__profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.dashboard__avatar-img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dashboard__avatar-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #9d80ff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+}
+
+.dashboard__dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 180px;
+    background-color: #0d0a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard__dropdown--hidden {
+    display: none;
+}
+
+.dashboard__dropdown--visible {
+    display: block;
+}
+
+.dashboard__dropdown-item {
+    padding: 12px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #8a8891;
+    text-align: left;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+}
+
+.dashboard__dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.dashboard__dropdown-item--danger {
+    color: #ff5959;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dashboard__main {
+    padding: 50px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.dashboard__section {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px;
+    backdrop-filter: blur(12px);
+}
+
+.dashboard__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.dashboard__section-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.dashboard__add-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px;
+    border: none;
+    background: transparent;
+}
+
+.dashboard__add-btn:hover .dashboard__add-icon {
+    transform: scale(1.1);
+}
+
+.dashboard__add-btn:hover .dashboard__add-text {
+    color: #fff;
+}
+
+.dashboard__add-icon {
+    font-size: 22px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+
+.dashboard__add-text {
+    font-size: 11px;
+    color: #8a8891;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    transition: color 0.2s ease;
+}
+
+.dashboard__empty-state {
+    text-align: center;
+    padding: 60px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.dashboard__empty-state-link {
+    color: #9d80ff;
+    cursor: pointer;
+}
+
+.dashboard__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
