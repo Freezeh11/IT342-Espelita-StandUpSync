@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/authService';
 import '../css/auth.css';
@@ -39,6 +39,8 @@ const validateRegister = ({ username, email, password, confirm }) => {
 
 const Register = () => {
     const navigate = useNavigate();
+
+    useEffect(() => { document.title = 'StandUpSync | Register'; }, []);
     const [form, setForm] = useState({ username: '', email: '', password: '', confirm: '' });
     const [errors, setErrors] = useState({});
     const [serverError, setServerError] = useState('');

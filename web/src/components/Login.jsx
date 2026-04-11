@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getCurrentUser } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../css/auth.css';
@@ -18,6 +18,8 @@ const Login = () => {
     const [serverError, setServerError] = useState('');
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => { document.title = 'StandUpSync | Login'; }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
