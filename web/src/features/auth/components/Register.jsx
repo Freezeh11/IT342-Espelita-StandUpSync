@@ -91,7 +91,6 @@ const Register = () => {
                 {serverError && <div className="auth__alert auth__alert--error" role="alert">{serverError}</div>}
                 {success && <div className="auth__alert auth__alert--success" role="alert">✓ Account created! Redirecting to login…</div>}
 
-                {/* Role selector */}
                 <div style={{ display: 'flex', gap: '8px', marginBottom: '24px' }}>
                     <button
                         type="button"

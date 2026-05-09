@@ -33,23 +33,18 @@ export const updateTeam = (teamId, name) =>
 export const changeManager = (teamId, newManagerId) =>
     axios.put(`${API_URL}/${teamId}/manager`, { newManagerId }, authHeader());
 
-// Manager: create pending (unassigned) task
 export const createPendingTask = (teamId, task) =>
     axios.post(`${API_URL}/${teamId}/tasks`, task, authHeader());
 
-// Manager: assign an existing pending task to a member
 export const assignTaskToMember = (teamId, taskId, userId) =>
     axios.put(`${API_URL}/${teamId}/tasks/${taskId}/assign?userId=${userId}`, {}, authHeader());
 
-// Member: self-assign (take) a pending task
 export const takeTask = (teamId, taskId) =>
     axios.put(`${API_URL}/${teamId}/tasks/${taskId}/take`, {}, authHeader());
 
-// Member: get full personal team project board (assigned + personal)
 export const getMyTeamTasks = (teamId) =>
     axios.get(`${API_URL}/${teamId}/my-tasks`, authHeader());
 
-// Member: create a personal (private) task in their team project
 export const createPersonalTask = (teamId, task) =>
     axios.post(`${API_URL}/${teamId}/my-tasks`, task, authHeader());
 
@@ -62,10 +57,8 @@ export const deleteTeamTask = (teamId, taskId) =>
 export const updateTeamTask = (teamId, taskId, task) =>
     axios.put(`${API_URL}/${teamId}/tasks/${taskId}`, task, authHeader());
 
-// Keep old assignTask for any legacy use
 export const assignTask = assignTaskToMember;
 
-// Admin user management
 const USER_API = 'http://localhost:8080/api/user';
 export const getAllUsers = () =>
     axios.get(`${USER_API}/all`, authHeader());

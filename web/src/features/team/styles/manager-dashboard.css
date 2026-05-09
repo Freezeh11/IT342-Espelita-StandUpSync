@@ -1,5 +1,3 @@
-/* ── Manager Dashboard ─────────────────────────────────────────────────── */
-
 .mgr-dashboard__wrapper {
     min-height: 100vh;
     background: radial-gradient(ellipse at top, #0e0928 0%, #06040f 55%, #000000 100%);
@@ -9,7 +7,6 @@
     color: #e2e0ea;
 }
 
-/* ── Navbar ── */
 .mgr-dashboard__navbar {
     display: flex;
     align-items: center;
@@ -196,7 +193,6 @@
     text-align: center;
 }
 
-/* ── Team name / code ── */
 .mgr-dashboard__team-name {
     font-size: 22px;
     font-weight: 700;
@@ -245,7 +241,6 @@
 
 .mgr-dashboard__copy-btn:hover { background: rgba(157, 128, 255, 0.2); }
 
-/* ── Rename form ── */
 .mgr-dashboard__rename-form {
     display: flex;
     gap: 8px;
@@ -268,7 +263,6 @@
 
 .mgr-dashboard__rename-input:focus { border-color: #9d80ff; }
 
-/* ── Buttons ── */
 .mgr-dashboard__btn {
     padding: 9px 18px;
     border-radius: 10px;
@@ -304,7 +298,6 @@
 
 .mgr-dashboard__btn--danger:hover { background: rgba(255, 89, 89, 0.18); }
 
-/* ── Members grid ── */
 .mgr-dashboard__members-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -386,7 +379,6 @@
     justify-content: flex-end;
 }
 
-/* ── Tasks list ── */
 .mgr-dashboard__tasks-list {
     display: flex;
     flex-direction: column;
@@ -475,7 +467,6 @@
     border: 1px solid rgba(157, 128, 255, 0.2);
 }
 
-/* ── Modal ── */
 .mgr-dashboard__modal-overlay {
     position: fixed;
     inset: 0;

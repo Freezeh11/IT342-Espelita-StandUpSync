@@ -23,14 +23,12 @@ public class Task {
     @Column(name = "project_id")
     private Long projectId;
 
-    // Team task support
     @Column(name = "team_id")
     private Long teamId;
 
     @Column(name = "assigned_user_id")
     private Long assignedUserId;
 
-    // personal=true: user-created private task (not visible to manager in team view)
     @Column(name = "personal", columnDefinition = "boolean default false")
     private boolean personal = false;
 

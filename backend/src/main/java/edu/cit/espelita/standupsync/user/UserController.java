@@ -63,7 +63,6 @@ public class UserController {
         }
     }
 
-    // Admin: get all users
     @GetMapping("/all")
     public ResponseEntity<?> getAllUsers() {
         List<Map<String, Object>> users = userService.getAllUsers(currentUsername()).stream()
@@ -80,14 +79,12 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    // Admin: change user role
     @PutMapping("/{id}/role")
     public ResponseEntity<?> changeUserRole(@PathVariable Long id, @RequestBody Map<String, String> body) {
         User updated = userService.changeUserRole(id, body.get("role"), currentUsername());
         return ResponseEntity.ok(userToMap(updated, userService.getProfilePic(updated)));
     }
 
-    // Admin: delete user
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id, currentUsername());

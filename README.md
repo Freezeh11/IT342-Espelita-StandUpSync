@@ -38,8 +38,14 @@
 * **auth/register**
 * **auth/login**
 * **user/me**
-cd backend
-.\mvnw test
-cd web
-npm install
-npm test
+
+## Steps to run Automated Testing
+* **Backend**
+   ```bash
+   cd backend
+   .\mvnw test
+* **Web**
+   ```bash   
+   cd web
+   npm install
+   npm test

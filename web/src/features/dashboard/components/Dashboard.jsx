@@ -43,7 +43,6 @@ const Dashboard = () => {
             .then(res => {
                 const u = res.data;
 
-                // Role-based redirect guard
                 if (u.role === 'MANAGER') { navigate('/manager-dashboard', { replace: true }); return; }
                 if (u.role === 'ADMIN') { navigate('/admin-dashboard', { replace: true }); return; }
 
@@ -70,7 +69,6 @@ const Dashboard = () => {
                     })
                     .catch(err => console.warn('Could not load task stats:', err));
 
-                // Load team info (returns array; for users take first element)
                 getMyTeams()
                     .then(res => {
                         const list = res.data || [];
@@ -148,7 +146,6 @@ const Dashboard = () => {
             </nav>
 
             <main className="dashboard__main">
-                {/* Team Section for users */}
                 {team && (
                     <section className="dashboard__section" style={{ marginBottom: '24px' }}>
                         <header className="dashboard__section-header">
@@ -174,7 +171,6 @@ const Dashboard = () => {
                             >📋 Open Team Project</button>
                         </header>
 
-                        {/* Team Members */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '24px' }}>
                             {teamMembers.map(m => (
                                 <div key={m.userId} style={{
@@ -199,7 +195,6 @@ const Dashboard = () => {
                             ))}
                         </div>
 
-                        {/* Pending Tasks - members can take */}
                         {teamTasks.filter(t => !t.assignedUserId).length > 0 && (
                             <div style={{ marginBottom: '20px' }}>
                                 <div style={{ fontSize: '13px', fontWeight: 700, color: '#8a8891', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '12px' }}>
@@ -237,7 +232,6 @@ const Dashboard = () => {
                             </div>
                         )}
 
-                        {/* My assigned tasks */}
                         {teamTasks.filter(t => t.assignedUserId === user?.id).length > 0 && (
                             <div>
                                 <div style={{ fontSize: '13px', fontWeight: 700, color: '#8a8891', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '12px' }}>

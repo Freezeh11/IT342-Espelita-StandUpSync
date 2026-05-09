@@ -10,6 +10,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTeamId(Long teamId);
     List<Task> findByAssignedUserId(Long assignedUserId);
     List<Task> findByTeamIdAndAssignedUserId(Long teamId, Long assignedUserId);
-    // Manager view: only non-personal tasks
     List<Task> findByTeamIdAndPersonalFalse(Long teamId);
 }

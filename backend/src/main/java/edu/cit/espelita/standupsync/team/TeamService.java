@@ -30,7 +30,6 @@ public class TeamService {
     @Autowired
     private TaskRepository taskRepository;
 
-    // ─── helpers ──────────────────────────────────────
 
     private User resolveUser(String username) {
         return userRepository.findByUsername(username)
@@ -97,14 +96,12 @@ public class TeamService {
         return dto;
     }
 
-    // ─── manager: create team ──────────────────────────
 
     public TeamDto createTeam(String name, String managerUsername) {
         User manager = resolveUser(managerUsername);
         if (!"MANAGER".equals(manager.getRole()) && !"ADMIN".equals(manager.getRole())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only managers can create teams");
         }
-        // Managers can have multiple teams now
         Team team = new Team();
         team.setName(name);
         team.setManager(manager);
@@ -112,7 +109,6 @@ public class TeamService {
         return toDto(teamRepository.save(team));
     }
 
-    // ─── user: join team via code ──────────────────────
 
     @Transactional
     public TeamDto joinTeam(String teamCode, String username) {
@@ -120,11 +116,9 @@ public class TeamService {
         Team team = teamRepository.findByTeamCode(teamCode.toUpperCase().trim())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid team code"));
 
-        // Already a member?
         if (teamMemberRepository.existsByTeamIdAndUserId(team.getId(), user.getId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Already a member of this team");
         }
-        // Manager joining their own team does not make sense
         if (team.getManager().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You are the manager of this team");
         }
@@ -137,22 +131,18 @@ public class TeamService {
         return toDto(team);
     }
 
-    // ─── get my teams ──────────────────────────────────
 
     public List<TeamDto> getMyTeams(String username) {
         User user = resolveUser(username);
-        // If manager, return all their teams
         if ("MANAGER".equals(user.getRole()) || "ADMIN".equals(user.getRole())) {
             return teamRepository.findByManagerId(user.getId()).stream()
                     .map(this::toDto).toList();
         }
-        // If user, find team membership
         List<TeamMember> memberships = teamMemberRepository.findByUserId(user.getId());
         if (memberships.isEmpty()) return List.of();
         return memberships.stream().map(m -> toDto(m.getTeam())).toList();
     }
 
-    // ─── get team members ──────────────────────────────
 
     public List<TeamMemberDto> getTeamMembers(Long teamId, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
@@ -167,15 +157,12 @@ public class TeamService {
         }
 
         List<TeamMemberDto> result = new ArrayList<>();
-        // Add manager first
         result.add(toMemberDto(team.getManager(), "MANAGER"));
-        // Add members
         teamMemberRepository.findByTeamId(teamId).forEach(tm ->
                 result.add(toMemberDto(tm.getUser(), tm.getMemberRole())));
         return result;
     }
 
-    // ─── remove member ─────────────────────────────────
 
     @Transactional
     public void removeMember(Long teamId, Long userId, String requesterUsername) {
@@ -189,7 +176,6 @@ public class TeamService {
         teamMemberRepository.deleteByTeamIdAndUserId(teamId, userId);
     }
 
-    // ─── delete team ───────────────────────────────────
 
     @Transactional
     public void deleteTeam(Long teamId, String requesterUsername) {
@@ -197,14 +183,11 @@ public class TeamService {
         Team team = resolveTeam(teamId);
         assertManagerOrAdmin(requester, team);
 
-        // Remove all memberships first
         teamMemberRepository.findByTeamId(teamId).forEach(teamMemberRepository::delete);
-        // Remove team tasks
         taskRepository.findByTeamId(teamId).forEach(taskRepository::delete);
         teamRepository.delete(team);
     }
 
-    // ─── update team name ──────────────────────────────
 
     public TeamDto updateTeam(Long teamId, String name, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
@@ -213,8 +196,6 @@ public class TeamService {
         team.setName(name);
         return toDto(teamRepository.save(team));
     }
-
-    // ─── admin: change manager ─────────────────────────
 
     @Transactional
     public TeamDto changeManager(Long teamId, Long newManagerId, String requesterUsername) {
@@ -225,20 +206,15 @@ public class TeamService {
         if (!"MANAGER".equals(newManager.getRole()) && !"ADMIN".equals(newManager.getRole())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New manager must have MANAGER role");
         }
-        // Remove old manager's membership if any and add new manager
         team.setManager(newManager);
         return toDto(teamRepository.save(team));
     }
-
-    // ─── admin: get all teams ──────────────────────────
 
     public List<TeamDto> getAllTeams(String requesterUsername) {
         User requester = resolveUser(requesterUsername);
         assertAdmin(requester);
         return teamRepository.findAll().stream().map(this::toDto).toList();
     }
-
-    // ─── manager: create a pending (unassigned) task ───
 
     public Task createPendingTask(Long teamId, Task task, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
@@ -247,13 +223,11 @@ public class TeamService {
 
         task.setUser(requester);
         task.setTeamId(teamId);
-        task.setAssignedUserId(null); // unassigned / pending
+        task.setAssignedUserId(null);
         task.setStatus("pending");
         task.setBlocked(false);
         return taskRepository.save(task);
     }
-
-    // ─── manager: assign a pending task to a member ────
 
     @Transactional
     public Task assignTaskToMember(Long teamId, Long taskId, Long userId, String requesterUsername) {
@@ -274,8 +248,6 @@ public class TeamService {
         task.setStatus("inProgress");
         return taskRepository.save(task);
     }
-
-    // ─── member: self-assign (take) a pending task ─────
 
     @Transactional
     public Task takeTask(Long teamId, Long taskId, String requesterUsername) {
@@ -301,8 +273,6 @@ public class TeamService {
         return taskRepository.save(task);
     }
 
-    // ─── get team tasks (manager view — excludes personal) ───
-
     public List<Task> getTeamTasks(Long teamId, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
         Team team = resolveTeam(teamId);
@@ -314,11 +284,9 @@ public class TeamService {
         if (!isAdmin && !isManager && !isMember) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
         }
-        // Manager/admin see official tasks only; members see all non-personal team tasks too
         return taskRepository.findByTeamIdAndPersonalFalse(teamId);
     }
 
-    // ─── user: create personal task in team project ───
 
     public Task createPersonalTask(Long teamId, Task task, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
@@ -331,15 +299,12 @@ public class TeamService {
 
         task.setUser(requester);
         task.setTeamId(teamId);
-        task.setAssignedUserId(requester.getId()); // self-assigned
-        task.setPersonal(true);  // private — not visible to manager
+        task.setAssignedUserId(requester.getId()); 
+        task.setPersonal(true);
         task.setStatus(task.getStatus() != null ? task.getStatus() : "inProgress");
         task.setBlocked("blocker".equals(task.getStatus()));
         return taskRepository.save(task);
     }
-
-    // ─── user: get full personal team project board ───
-    // Returns both manager-assigned tasks AND user's personal tasks for this team
 
     public List<Task> getMyTeamTasks(Long teamId, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
@@ -353,8 +318,6 @@ public class TeamService {
         return taskRepository.findByTeamIdAndAssignedUserId(teamId, requester.getId());
     }
 
-    // ─── delete team task ──────────────────────────────
-
     @Transactional
     public void deleteTeamTask(Long teamId, Long taskId, String requesterUsername) {
         User requester = resolveUser(requesterUsername);
@@ -367,8 +330,6 @@ public class TeamService {
         }
         taskRepository.delete(task);
     }
-
-    // ─── update team task status (by assigned user or manager) ─
 
     @Transactional
     public Task updateTeamTask(Long teamId, Long taskId, Task updated, String requesterUsername) {

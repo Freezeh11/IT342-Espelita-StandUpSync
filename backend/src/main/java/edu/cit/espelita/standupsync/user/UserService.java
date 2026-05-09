@@ -28,7 +28,6 @@ public class UserService implements UserDetailsService {
 
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // Only allow USER and MANAGER via self-registration
         String role = user.getRole();
         if (role == null || (!role.equals("USER") && !role.equals("MANAGER"))) {
             user.setRole("USER");
@@ -88,8 +87,6 @@ public class UserService implements UserDetailsService {
         }
         return userRepository.save(user);
     }
-
-    // ─── admin methods ─────────────────────────────────
 
     public List<User> getAllUsers(String requesterUsername) {
         User requester = userRepository.findByUsername(requesterUsername)

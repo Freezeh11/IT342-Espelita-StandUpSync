@@ -8,6 +8,6 @@ public class TeamMemberDto {
     private String username;
     private String displayName;
     private String email;
-    private String memberRole; // MEMBER or MANAGER (for the manager)
+    private String memberRole; // MEMBER or MANAGER
     private String globalRole; // USER, MANAGER, ADMIN
 }

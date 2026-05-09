@@ -8,10 +8,8 @@ import {
     updateTeamTask,
     deleteTeamTask,
 } from '../services/teamService';
-// Reuse the exact same CSS as the personal project page
 import '../../project/styles/project-page.css';
 
-// ── Shared icons (same as ProjectPage) ───────
 const TrashIcon = () => (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6" /><path d="M14 11v6" /><path d="M9 6V4h6v2" />
@@ -23,7 +21,6 @@ const CopyIcon = () => (
     </svg>
 );
 
-// ── Add Task Modal (identical to ProjectPage) ─
 const AddTaskModal = ({ onClose, onAdd }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -49,7 +46,6 @@ const AddTaskModal = ({ onClose, onAdd }) => {
     );
 };
 
-// ── Update Task Modal ─────────────────────────
 const STATUS_COLORS = { inProgress: '#9d80ff', blocker: '#ff5959', done: '#4cff91' };
 const STATUS_LABELS = { inProgress: 'PROGRESS', blocker: 'BLOCKER', done: 'DONE' };
 
@@ -120,7 +116,6 @@ const UpdateTaskModal = ({ task, onClose, onUpdate, isAssigned }) => {
     );
 };
 
-// ── Report Modal (same as ProjectPage) ────────
 const DraggableTask = ({ task, from, onDragStart }) => (
     <div draggable onDragStart={() => onDragStart(task, from)} className="report-modal__task-row">
         <span className="report-modal__bullet" style={{ color: '#9d80ff', fontSize: '16px', lineHeight: 1 }}>•</span>
@@ -194,7 +189,6 @@ const ReportModal = ({ tasks, teamName, onClose }) => {
     );
 };
 
-// ── Task Card (ProjectPage style + personal badge) ──
 const TaskCard = ({ task, onEdit, onDelete, onDragStart }) => (
     <article
         className={`task-card task-card--${task.status}`}
@@ -219,7 +213,6 @@ const TaskCard = ({ task, onEdit, onDelete, onDragStart }) => (
     </article>
 );
 
-// ── Main TeamProjectPage ──────────────────────
 const TeamProjectPage = () => {
     const { teamId } = useParams();
     const navigate = useNavigate();
@@ -301,10 +294,8 @@ const TeamProjectPage = () => {
             {selectedTask && <UpdateTaskModal task={selectedTask} isAssigned={!selectedTask.personal} onClose={() => setSelectedTask(null)} onUpdate={handleUpdateTask} />}
             {showReport && <ReportModal tasks={tasks} teamName={team?.name} onClose={() => setShowReport(false)} />}
 
-            {/* Navbar — keeps team info from design #2 */}
             <nav className="project__navbar">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                    {/* Back button */}
                     <button
                         onClick={() => navigate('/dashboard')}
                         style={{
@@ -313,7 +304,6 @@ const TeamProjectPage = () => {
                             fontSize: '13px', fontWeight: 600, fontFamily: 'inherit', cursor: 'pointer'
                         }}
                     >← Dashboard</button>
-                    {/* Team name + badge */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ fontSize: '15px' }}>👥</span>
                         <span style={{ fontSize: '15px', fontWeight: 700, color: '#fff' }}>{team?.name}</span>
@@ -324,7 +314,6 @@ const TeamProjectPage = () => {
                         }}>My Team Project</span>
                     </div>
                 </div>
-                {/* User avatar + dropdown */}
                 <div className="project__nav-area" onClick={e => e.stopPropagation()}>
                     <button className="project__nav-btn" onClick={() => setIsDropdownOpen(o => !o)}>
                         {user?.profilePic
@@ -340,14 +329,12 @@ const TeamProjectPage = () => {
                 </div>
             </nav>
 
-            {/* Legend */}
             <div style={{ padding: '8px 40px', display: 'flex', gap: '20px', fontSize: '12px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                 <span style={{ color: '#9d80ff' }}>■ Manager-assigned</span>
                 <span style={{ color: '#4cff91' }}>■ Personal (private)</span>
             </div>
 
             <main className="project__main">
-                {/* Big team name — matches ProjectPage title style */}
                 <h1 className="project__title">{team?.name}</h1>
 
                 <div className="project__top-row">
@@ -358,7 +345,6 @@ const TeamProjectPage = () => {
                     <button className="project__generate-btn" onClick={() => setShowReport(true)}>Generate Report</button>
                 </div>
 
-                {/* Kanban board — identical markup to ProjectPage */}
                 <div className="project__board">
                     {[['inProgress', 'In Progress', 'inProgress'], ['blocker', 'Blockers', 'blockers'], ['done', 'Done', 'done']].map(([status, label, colClass]) => {
                         const colColor = COL_COLORS[colClass];

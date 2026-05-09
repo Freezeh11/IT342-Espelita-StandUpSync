@@ -8,7 +8,6 @@ import {
 } from '../../team/services/teamService';
 import '../styles/admin-dashboard.css';
 
-// ── Navbar Dropdown ──────────────────────────────────
 const DropdownMenu = ({ isOpen, navigate, handleLogout }) => (
     <ul className={`admin-dashboard__dropdown ${isOpen ? 'admin-dashboard__dropdown--visible' : 'admin-dashboard__dropdown--hidden'}`}>
         <li><button className="admin-dashboard__dropdown-item" onClick={() => navigate('/profile')}>Profile Settings</button></li>
@@ -16,12 +15,10 @@ const DropdownMenu = ({ isOpen, navigate, handleLogout }) => (
     </ul>
 );
 
-// ── Role chip ────────────────────────────────────────
 const RoleChip = ({ role }) => (
     <span className={`admin-dashboard__role-chip admin-dashboard__role-chip--${role}`}>{role}</span>
 );
 
-// ── Confirm Modal ────────────────────────────────────
 const ConfirmModal = ({ message, onConfirm, onCancel }) => (
     <div className="admin-dashboard__modal-overlay">
         <div className="admin-dashboard__modal">
@@ -35,7 +32,6 @@ const ConfirmModal = ({ message, onConfirm, onCancel }) => (
     </div>
 );
 
-// ── Teams Tab ────────────────────────────────────────
 const TeamsTab = ({ teams, setTeams }) => {
     const [expandedId, setExpandedId] = useState(null);
     const [membersMap, setMembersMap] = useState({});
@@ -229,7 +225,6 @@ const TeamsTab = ({ teams, setTeams }) => {
     );
 };
 
-// ── Users Tab ────────────────────────────────────────
 const UsersTab = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -331,7 +326,6 @@ const UsersTab = () => {
     );
 };
 
-// ── Main AdminDashboard ───────────────────────────────
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
@@ -366,7 +360,6 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard__wrapper">
-            {/* ── Navbar ── */}
             <nav className="admin-dashboard__navbar">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                     <div className="admin-dashboard__logo">
@@ -386,7 +379,6 @@ const AdminDashboard = () => {
                 </div>
             </nav>
 
-            {/* ── Tabs ── */}
             <div className="admin-dashboard__tabs">
                 <button
                     id="tab-teams"

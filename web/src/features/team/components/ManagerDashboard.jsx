@@ -9,7 +9,6 @@ import {
 } from '../services/teamService';
 import '../styles/manager-dashboard.css';
 
-// ── Helpers ──────────────────────────────────
 const statusLabel = (s) => ({ inProgress: 'In Progress', done: 'Done', blocker: 'Blocker', pending: 'Pending' }[s] || s);
 const statusClass = (s) => ({ inProgress: 'inProgress', done: 'done', blocker: 'blocker', pending: 'pending' }[s] || 'pending');
 const errorMsg = (e) => {
@@ -20,7 +19,6 @@ const errorMsg = (e) => {
     return JSON.stringify(d);
 };
 
-// ── Create Pending Task Modal ─────────────────
 const CreateTaskModal = ({ onClose, onCreate }) => {
     const [form, setForm] = useState({ title: '', description: '' });
     const [error, setError] = useState('');
@@ -66,7 +64,6 @@ const CreateTaskModal = ({ onClose, onCreate }) => {
     );
 };
 
-// ── Assign Pending Task Modal (per member) ────
 const AssignTaskModal = ({ member, pendingTasks, onClose, onAssign }) => {
     const [selectedTaskId, setSelectedTaskId] = useState('');
     const [error, setError] = useState('');
@@ -132,12 +129,11 @@ const AssignTaskModal = ({ member, pendingTasks, onClose, onAssign }) => {
     );
 };
 
-// ── Team Detail View ──────────────────────────
 const TeamDetail = ({ team, onBack, onTeamDeleted, onTeamRenamed }) => {
     const [members, setMembers] = useState([]);
     const [tasks, setTasks] = useState([]);
     const [showCreateTask, setShowCreateTask] = useState(false);
-    const [assigningToMember, setAssigningToMember] = useState(null); // TeamMemberDto
+    const [assigningToMember, setAssigningToMember] = useState(null);
     const [copyMsg, setCopyMsg] = useState('');
     const [renaming, setRenaming] = useState(false);
     const [renameValue, setRenameValue] = useState('');
@@ -217,7 +213,6 @@ const TeamDetail = ({ team, onBack, onTeamDeleted, onTeamRenamed }) => {
                 />
             )}
 
-            {/* Team Header Card */}
             <div className="mgr-dashboard__card">
                 <div className="mgr-dashboard__card-header">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
@@ -265,7 +260,6 @@ const TeamDetail = ({ team, onBack, onTeamDeleted, onTeamRenamed }) => {
                 <div className="mgr-dashboard__card"><p className="mgr-dashboard__loading">Loading team data…</p></div>
             ) : (
                 <>
-                    {/* Members */}
                     <div className="mgr-dashboard__card">
                         <div className="mgr-dashboard__card-header">
                             <h2 className="mgr-dashboard__card-title">Team Members</h2>
@@ -310,7 +304,6 @@ const TeamDetail = ({ team, onBack, onTeamDeleted, onTeamRenamed }) => {
                         )}
                     </div>
 
-                    {/* Tasks */}
                     <div className="mgr-dashboard__card">
                         <div className="mgr-dashboard__card-header">
                             <div>
@@ -366,7 +359,6 @@ const TeamDetail = ({ team, onBack, onTeamDeleted, onTeamRenamed }) => {
     );
 };
 
-// ── Teams List View ───────────────────────────
 const TeamsList = ({ teams, onSelect, onCreateTeam }) => {
     const [newName, setNewName] = useState('');
     const [creating, setCreating] = useState(false);
@@ -458,7 +450,6 @@ const TeamsList = ({ teams, onSelect, onCreateTeam }) => {
     );
 };
 
-// ── Main ManagerDashboard ─────────────────────
 const ManagerDashboard = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
