@@ -9,7 +9,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -18,12 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser() {
+    private String currentUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(auth.getName());
-        String profilePic = userService.getProfilePic(user);
+        return auth.getName();
+    }
 
+    private Map<String, Object> userToMap(User user, String profilePic) {
         Map<String, Object> response = new HashMap<>();
         response.put("id", user.getId());
         response.put("username", user.getUsername());
@@ -31,17 +33,21 @@ public class UserController {
         response.put("email", user.getEmail());
         response.put("role", user.getRole());
         response.put("profilePic", profilePic);
+        return response;
+    }
 
-        return ResponseEntity.ok(response);
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser() {
+        User user = userService.findByUsername(currentUsername());
+        String profilePic = userService.getProfilePic(user);
+        return ResponseEntity.ok(userToMap(user, profilePic));
     }
 
     @PutMapping("/me")
     public ResponseEntity<?> updateCurrentUser(@RequestBody Map<String, String> body) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = auth.getName();
         try {
             User updated = userService.updateCurrentUser(
-                    currentUsername,
+                    currentUsername(),
                     body.get("displayName"),
                     body.get("email"),
                     body.get("currentPassword"),
@@ -52,17 +58,40 @@ public class UserController {
             }
 
             String profilePic = userService.getProfilePic(updated);
-            Map<String, Object> response = new HashMap<>();
-            response.put("id", updated.getId());
-            response.put("username", updated.getUsername());
-            response.put("displayName", updated.getDisplayName());
-            response.put("email", updated.getEmail());
-            response.put("role", updated.getRole());
-            response.put("profilePic", profilePic);
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(userToMap(updated, profilePic));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
+    }
+
+    // Admin: get all users
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers() {
+        List<Map<String, Object>> users = userService.getAllUsers(currentUsername()).stream()
+                .map(u -> {
+                    Map<String, Object> m = new HashMap<>();
+                    m.put("id", u.getId());
+                    m.put("username", u.getUsername());
+                    m.put("displayName", u.getDisplayName());
+                    m.put("email", u.getEmail());
+                    m.put("role", u.getRole());
+                    return m;
+                })
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(users);
+    }
+
+    // Admin: change user role
+    @PutMapping("/{id}/role")
+    public ResponseEntity<?> changeUserRole(@PathVariable Long id, @RequestBody Map<String, String> body) {
+        User updated = userService.changeUserRole(id, body.get("role"), currentUsername());
+        return ResponseEntity.ok(userToMap(updated, userService.getProfilePic(updated)));
+    }
+
+    // Admin: delete user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id, currentUsername());
+        return ResponseEntity.noContent().build();
     }
 }

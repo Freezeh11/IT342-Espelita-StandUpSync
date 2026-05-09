@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/authService';
 import '../css/auth.css';
+import axios from 'axios';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SPECIAL_RE = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
@@ -39,7 +40,9 @@ const validateRegister = ({ username, email, password, confirm }) => {
 
 const Register = () => {
     const navigate = useNavigate();
-    const [form, setForm] = useState({ username: '', email: '', password: '', confirm: '' });
+
+    useEffect(() => { document.title = 'StandUpSync | Register'; }, []);
+    const [form, setForm] = useState({ username: '', email: '', password: '', confirm: '', role: 'USER' });
     const [errors, setErrors] = useState({});
     const [serverError, setServerError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -56,7 +59,12 @@ const Register = () => {
         if (Object.keys(errs).length) { setErrors(errs); return; }
         setErrors({});
         try {
-            await register(form.username, form.email, form.password);
+            await axios.post('http://localhost:8080/api/auth/register', {
+                username: form.username,
+                email: form.email,
+                password: form.password,
+                role: form.role
+            });
             setSuccess(true);
             setTimeout(() => navigate('/login'), 1800);
         } catch (err) {
@@ -82,6 +90,38 @@ const Register = () => {
 
                 {serverError && <div className="auth__alert auth__alert--error" role="alert">{serverError}</div>}
                 {success && <div className="auth__alert auth__alert--success" role="alert">✓ Account created! Redirecting to login…</div>}
+
+                {/* Role selector */}
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '24px' }}>
+                    <button
+                        type="button"
+                        id="role-user-btn"
+                        onClick={() => setField('role', 'USER')}
+                        style={{
+                            flex: 1, padding: '10px', borderRadius: '10px',
+                            border: '1px solid',
+                            borderColor: form.role === 'USER' ? '#9d80ff' : 'rgba(255,255,255,0.1)',
+                            background: form.role === 'USER' ? 'rgba(157,128,255,0.15)' : 'rgba(255,255,255,0.03)',
+                            color: form.role === 'USER' ? '#9d80ff' : '#8a8891',
+                            fontWeight: 600, fontSize: '14px', cursor: 'pointer',
+                            fontFamily: 'Inter, sans-serif', transition: 'all 0.2s'
+                        }}
+                    >👤 User</button>
+                    <button
+                        type="button"
+                        id="role-manager-btn"
+                        onClick={() => setField('role', 'MANAGER')}
+                        style={{
+                            flex: 1, padding: '10px', borderRadius: '10px',
+                            border: '1px solid',
+                            borderColor: form.role === 'MANAGER' ? '#9d80ff' : 'rgba(255,255,255,0.1)',
+                            background: form.role === 'MANAGER' ? 'rgba(157,128,255,0.15)' : 'rgba(255,255,255,0.03)',
+                            color: form.role === 'MANAGER' ? '#9d80ff' : '#8a8891',
+                            fontWeight: 600, fontSize: '14px', cursor: 'pointer',
+                            fontFamily: 'Inter, sans-serif', transition: 'all 0.2s'
+                        }}
+                    >🏢 Manager</button>
+                </div>
 
                 <form onSubmit={handleSubmit} noValidate>
                     {/* Username */}

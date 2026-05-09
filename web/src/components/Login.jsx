@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getCurrentUser } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import '../css/auth.css';
@@ -19,6 +19,8 @@ const Login = () => {
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => { document.title = 'StandUpSync | Login'; }, []);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setServerError('');
@@ -27,11 +29,15 @@ const Login = () => {
         setErrors({});
         const authHeader = 'Basic ' + btoa(`${username}:${password}`);
         try {
-            await getCurrentUser(authHeader);
+            const res = await getCurrentUser(authHeader);
             localStorage.setItem('auth', authHeader);
             localStorage.setItem('user', username);
             setSuccess(true);
-            setTimeout(() => navigate('/dashboard'), 1800);
+            const role = res.data?.role;
+            const dest = role === 'ADMIN' ? '/admin-dashboard'
+                       : role === 'MANAGER' ? '/manager-dashboard'
+                       : '/dashboard';
+            setTimeout(() => navigate(dest), 1800);
         } catch (err) {
             const status = err.response?.status;
             if (status === 401 || status === 403) {

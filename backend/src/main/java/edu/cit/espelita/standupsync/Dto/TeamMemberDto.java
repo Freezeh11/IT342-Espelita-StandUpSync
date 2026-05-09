@@ -1,0 +1,13 @@
+package edu.cit.espelita.standupsync.Dto;
+
+import lombok.Data;
+
+@Data
+public class TeamMemberDto {
+    private Long userId;
+    private String username;
+    private String displayName;
+    private String email;
+    private String memberRole; // MEMBER or MANAGER (for the manager)
+    private String globalRole; // USER, MANAGER, ADMIN
+}

@@ -1,0 +1,260 @@
+/* =====================================================
+   Admin Dashboard CSS — Galaxy Theme
+   ===================================================== */
+
+.admin-dashboard__wrapper {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: radial-gradient(circle at top right, #130a24 0%, #05010d 100%);
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden; overflow-y: auto;
+}
+
+/* ── Navbar ── */
+.admin-dashboard__navbar {
+    height: 70px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(5,1,13,0.5);
+    backdrop-filter: blur(10px);
+    position: sticky; top: 0; z-index: 1000;
+}
+.admin-dashboard__logo { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.admin-dashboard__logo-highlight { color: #9d80ff; }
+
+.admin-dashboard__role-badge {
+    background: linear-gradient(135deg, #ff596922, #ff596944);
+    border: 1px solid #ff596966;
+    color: #ff8080;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; padding: 4px 10px;
+    border-radius: 100px; text-transform: uppercase;
+}
+
+.admin-dashboard__profile-area { position: relative; }
+.admin-dashboard__profile-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 16px; border-radius: 100px;
+    cursor: pointer; color: white; font-weight: 500; font-size: 14px;
+    transition: background 0.2s;
+}
+.admin-dashboard__profile-btn:hover { background: rgba(255,255,255,0.09); }
+
+.admin-dashboard__avatar-img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.admin-dashboard__avatar-circle {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, #ff5959, #c94040);
+    font-size: 13px; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-weight: bold;
+}
+
+.admin-dashboard__dropdown {
+    position: absolute; top: 52px; right: 0; width: 190px;
+    background: #0d0a1a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    overflow: hidden; list-style: none; padding: 0; margin: 0;
+}
+.admin-dashboard__dropdown--hidden { display: none; }
+.admin-dashboard__dropdown--visible { display: block; }
+.admin-dashboard__dropdown-item {
+    padding: 12px 16px; font-size: 14px; cursor: pointer;
+    color: #8a8891; text-align: left; display: block; width: 100%;
+    box-sizing: border-box; background: transparent; border: none;
+    font-family: 'Inter', sans-serif;
+}
+.admin-dashboard__dropdown-item:hover { background: rgba(255,255,255,0.05); }
+.admin-dashboard__dropdown-item--danger { color: #ff5959; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* ── Tabs ── */
+.admin-dashboard__tabs {
+    display: flex; gap: 4px;
+    padding: 20px 40px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(5,1,13,0.3);
+}
+.admin-dashboard__tab {
+    padding: 12px 24px; border-radius: 12px 12px 0 0;
+    border: 1px solid transparent; border-bottom: none;
+    background: transparent; color: #8a8891;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: 'Inter', sans-serif; transition: all 0.2s;
+}
+.admin-dashboard__tab:hover { color: #ccc; background: rgba(255,255,255,0.04); }
+.admin-dashboard__tab--active {
+    background: rgba(157,128,255,0.12);
+    border-color: rgba(157,128,255,0.25);
+    color: #9d80ff;
+}
+
+/* ── Main ── */
+.admin-dashboard__main {
+    padding: 36px 40px;
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 24px;
+}
+
+/* ── Card ── */
+.admin-dashboard__card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px; padding: 32px;
+    backdrop-filter: blur(12px);
+}
+.admin-dashboard__card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+}
+.admin-dashboard__card-title { font-size: 22px; font-weight: 700; margin: 0; }
+.admin-dashboard__card-count {
+    font-size: 13px; color: #8a8891;
+    background: rgba(255,255,255,0.06);
+    padding: 4px 12px; border-radius: 100px;
+}
+
+/* ── Table ── */
+.admin-dashboard__table {
+    width: 100%; border-collapse: collapse;
+}
+.admin-dashboard__table th {
+    text-align: left; padding: 10px 14px;
+    font-size: 11px; font-weight: 700; color: #8a8891;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.admin-dashboard__table td {
+    padding: 14px; font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+}
+.admin-dashboard__table tr:last-child td { border-bottom: none; }
+.admin-dashboard__table tr:hover td { background: rgba(255,255,255,0.025); }
+
+/* ── Role badges ── */
+.admin-dashboard__role-chip {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 100px; font-size: 11px;
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.admin-dashboard__role-chip--USER {
+    background: rgba(138,136,145,0.12);
+    border: 1px solid rgba(138,136,145,0.2);
+    color: #8a8891;
+}
+.admin-dashboard__role-chip--MANAGER {
+    background: rgba(157,128,255,0.15);
+    border: 1px solid rgba(157,128,255,0.3);
+    color: #9d80ff;
+}
+.admin-dashboard__role-chip--ADMIN {
+    background: rgba(255,89,89,0.12);
+    border: 1px solid rgba(255,89,89,0.25);
+    color: #ff8080;
+}
+
+/* ── Team code ── */
+.admin-dashboard__team-code {
+    font-family: 'Courier New', monospace;
+    font-weight: 800; letter-spacing: 0.2em;
+    color: #9d80ff; font-size: 13px;
+}
+
+/* ── Action buttons ── */
+.admin-dashboard__btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 8px; border: none;
+    cursor: pointer; font-weight: 600; font-size: 12px;
+    font-family: 'Inter', sans-serif; transition: all 0.2s;
+}
+.admin-dashboard__btn--primary {
+    background: linear-gradient(135deg, #9d80ff, #6b4fd8); color: #fff;
+}
+.admin-dashboard__btn--danger {
+    background: rgba(255,89,89,0.12);
+    border: 1px solid rgba(255,89,89,0.25);
+    color: #ff5959;
+}
+.admin-dashboard__btn--danger:hover { background: rgba(255,89,89,0.22); }
+.admin-dashboard__btn--neutral {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #ccc;
+}
+.admin-dashboard__btn--neutral:hover { background: rgba(255,255,255,0.1); }
+.admin-dashboard__btn--sm { padding: 5px 10px; font-size: 11px; }
+
+/* ── Expand toggle ── */
+.admin-dashboard__expand-row td {
+    padding: 0; border: none;
+}
+.admin-dashboard__members-panel {
+    background: rgba(157,128,255,0.05);
+    border: 1px solid rgba(157,128,255,0.12);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 4px 0 12px;
+}
+.admin-dashboard__members-panel-title {
+    font-size: 12px; font-weight: 700;
+    color: #9d80ff; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 12px;
+}
+
+/* ── Inline select ── */
+.admin-dashboard__select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff; border-radius: 8px;
+    padding: 6px 10px; font-size: 12px;
+    font-family: 'Inter', sans-serif; cursor: pointer;
+    outline: none;
+}
+.admin-dashboard__select option { background: #0d0a1a; }
+
+/* ── Modal ── */
+.admin-dashboard__modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 5000; padding: 20px;
+}
+.admin-dashboard__modal {
+    background: #0d0a1a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 36px;
+    width: 100%; max-width: 440px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+}
+.admin-dashboard__modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.admin-dashboard__modal-sub { color: #8a8891; font-size: 14px; margin-bottom: 24px; }
+.admin-dashboard__modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ── Misc ── */
+.admin-dashboard__empty {
+    text-align: center; padding: 40px 0;
+    color: #555; font-size: 14px;
+}
+.admin-dashboard__loading { padding: 40px; color: #8a8891; }
+.admin-dashboard__search {
+    padding: 10px 16px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    color: #fff; font-size: 14px; outline: none;
+    font-family: 'Inter', sans-serif; width: 260px;
+}
+.admin-dashboard__search::placeholder { color: #555; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .admin-dashboard__main { padding: 20px 16px; }
+    .admin-dashboard__navbar { padding: 0 20px; }
+    .admin-dashboard__tabs { padding: 16px 16px 0; }
+    .admin-dashboard__card { padding: 20px 16px; }
+    .admin-dashboard__table { font-size: 12px; }
+}

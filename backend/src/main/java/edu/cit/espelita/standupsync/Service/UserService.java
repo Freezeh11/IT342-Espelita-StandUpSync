@@ -5,13 +5,16 @@ import edu.cit.espelita.standupsync.Entity.UserProfile;
 import edu.cit.espelita.standupsync.Repository.UserRepository;
 import edu.cit.espelita.standupsync.Repository.UserProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -27,7 +30,11 @@ public class UserService implements UserDetailsService {
 
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("USER");
+        // Only allow USER and MANAGER via self-registration
+        String role = user.getRole();
+        if (role == null || (!role.equals("USER") && !role.equals("MANAGER"))) {
+            user.setRole("USER");
+        }
         return userRepository.save(user);
     }
 
@@ -82,5 +89,40 @@ public class UserService implements UserDetailsService {
             user.setPassword(passwordEncoder.encode(newPassword));
         }
         return userRepository.save(user);
+    }
+
+    // ─── admin methods ─────────────────────────────────
+
+    public List<User> getAllUsers(String requesterUsername) {
+        User requester = userRepository.findByUsername(requesterUsername)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+        if (!"ADMIN".equals(requester.getRole())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin access required");
+        }
+        return userRepository.findAll();
+    }
+
+    public User changeUserRole(Long userId, String newRole, String requesterUsername) {
+        User requester = userRepository.findByUsername(requesterUsername)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+        if (!"ADMIN".equals(requester.getRole())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin access required");
+        }
+        if (!List.of("USER", "MANAGER", "ADMIN").contains(newRole)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid role: " + newRole);
+        }
+        User target = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        target.setRole(newRole);
+        return userRepository.save(target);
+    }
+
+    public void deleteUser(Long userId, String requesterUsername) {
+        User requester = userRepository.findByUsername(requesterUsername)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+        if (!"ADMIN".equals(requester.getRole())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin access required");
+        }
+        userRepository.deleteById(userId);
     }
 }

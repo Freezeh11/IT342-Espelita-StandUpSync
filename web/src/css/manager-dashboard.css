@@ -1,0 +1,555 @@
+/* ── Manager Dashboard ─────────────────────────────────────────────────── */
+
+.mgr-dashboard__wrapper {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #0e0928 0%, #06040f 55%, #000000 100%);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    color: #e2e0ea;
+}
+
+/* ── Navbar ── */
+.mgr-dashboard__navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+}
+
+.mgr-dashboard__logo {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: #fff;
+}
+
+.mgr-dashboard__logo-highlight {
+    color: #9d80ff;
+}
+
+.mgr-dashboard__role-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9d80ff;
+    background: rgba(157, 128, 255, 0.12);
+    border: 1px solid rgba(157, 128, 255, 0.28);
+    border-radius: 100px;
+    padding: 3px 10px;
+}
+
+.mgr-dashboard__profile-area {
+    position: relative;
+}
+
+.mgr-dashboard__profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    padding: 6px 14px 6px 6px;
+    cursor: pointer;
+    color: #e2e0ea;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.mgr-dashboard__profile-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.mgr-dashboard__avatar-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9d80ff, #6b4fd8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.mgr-dashboard__dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    min-width: 180px;
+    background: #1a1726;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 8px 0;
+    list-style: none;
+    z-index: 9999;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.mgr-dashboard__dropdown--visible { display: block; }
+.mgr-dashboard__dropdown--hidden { display: none; }
+
+.mgr-dashboard__dropdown-item {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #e2e0ea;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+}
+
+.mgr-dashboard__dropdown-item:hover { background: rgba(255, 255, 255, 0.06); }
+.mgr-dashboard__dropdown-item--danger { color: #ff5959; }
+.mgr-dashboard__dropdown-item--danger:hover { background: rgba(255, 89, 89, 0.08); }
+
+/* ── Main / Cards ── */
+.mgr-dashboard__main {
+    flex: 1;
+    padding: 32px;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mgr-dashboard__card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 28px 32px;
+    backdrop-filter: blur(8px);
+}
+
+.mgr-dashboard__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 22px;
+    flex-wrap: wrap;
+}
+
+.mgr-dashboard__card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.mgr-dashboard__loading {
+    text-align: center;
+    color: #8a8891;
+    padding: 40px 0;
+    font-size: 15px;
+}
+
+.mgr-dashboard__empty {
+    text-align: center;
+    padding: 32px;
+    color: #8a8891;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ── Create panel (empty state) ── */
+.mgr-dashboard__create-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 10px;
+}
+
+.mgr-dashboard__create-icon {
+    font-size: 44px;
+    margin-bottom: 8px;
+}
+
+.mgr-dashboard__create-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.mgr-dashboard__create-sub {
+    color: #8a8891;
+    font-size: 14px;
+    margin: 0;
+    text-align: center;
+}
+
+/* ── Team name / code ── */
+.mgr-dashboard__team-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.mgr-dashboard__code-block {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(157, 128, 255, 0.06);
+    border: 1px solid rgba(157, 128, 255, 0.15);
+    border-radius: 12px;
+    padding: 10px 16px;
+}
+
+.mgr-dashboard__code-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8a8891;
+    margin-bottom: 2px;
+}
+
+.mgr-dashboard__team-code {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: #9d80ff;
+    font-family: 'Courier New', monospace;
+}
+
+.mgr-dashboard__copy-btn {
+    background: rgba(157, 128, 255, 0.1);
+    border: 1px solid rgba(157, 128, 255, 0.3);
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #9d80ff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.mgr-dashboard__copy-btn:hover { background: rgba(157, 128, 255, 0.2); }
+
+/* ── Rename form ── */
+.mgr-dashboard__rename-form {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.mgr-dashboard__rename-input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 8px 14px;
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    min-width: 200px;
+    transition: border-color 0.2s;
+}
+
+.mgr-dashboard__rename-input:focus { border-color: #9d80ff; }
+
+/* ── Buttons ── */
+.mgr-dashboard__btn {
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.mgr-dashboard__btn--primary {
+    background: linear-gradient(135deg, #9d80ff, #6b4fd8);
+    color: #fff;
+}
+
+.mgr-dashboard__btn--primary:hover { opacity: 0.88; }
+.mgr-dashboard__btn--primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.mgr-dashboard__btn--secondary {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #c8c6d0;
+}
+
+.mgr-dashboard__btn--secondary:hover { background: rgba(255, 255, 255, 0.1); }
+
+.mgr-dashboard__btn--danger {
+    background: rgba(255, 89, 89, 0.1);
+    border: 1px solid rgba(255, 89, 89, 0.2);
+    color: #ff5959;
+}
+
+.mgr-dashboard__btn--danger:hover { background: rgba(255, 89, 89, 0.18); }
+
+/* ── Members grid ── */
+.mgr-dashboard__members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.mgr-dashboard__member-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mgr-dashboard__member-card:hover {
+    border-color: rgba(157, 128, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.mgr-dashboard__member-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mgr-dashboard__member-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9d80ff, #6b4fd8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.mgr-dashboard__member-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.mgr-dashboard__member-username {
+    font-size: 12px;
+    color: #8a8891;
+    margin-top: 1px;
+}
+
+.mgr-dashboard__member-badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 100px;
+    padding: 3px 10px;
+    width: fit-content;
+}
+
+.mgr-dashboard__member-badge--manager {
+    background: rgba(157, 128, 255, 0.12);
+    color: #9d80ff;
+    border: 1px solid rgba(157, 128, 255, 0.25);
+}
+
+.mgr-dashboard__member-badge--member {
+    background: rgba(255, 255, 255, 0.06);
+    color: #8a8891;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mgr-dashboard__member-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ── Tasks list ── */
+.mgr-dashboard__tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mgr-dashboard__task-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    padding: 14px 18px;
+    transition: border-color 0.2s;
+}
+
+.mgr-dashboard__task-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.mgr-dashboard__task-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.mgr-dashboard__task-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 3px;
+}
+
+.mgr-dashboard__task-desc {
+    font-size: 13px;
+    color: #8a8891;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mgr-dashboard__task-assignee {
+    font-size: 12px;
+    font-weight: 600;
+    color: #9d80ff;
+}
+
+.mgr-dashboard__task-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.mgr-dashboard__task-status {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 100px;
+    padding: 3px 10px;
+}
+
+.mgr-dashboard__task-status--inProgress {
+    background: rgba(255, 196, 0, 0.1);
+    color: #ffc400;
+    border: 1px solid rgba(255, 196, 0, 0.2);
+}
+
+.mgr-dashboard__task-status--done {
+    background: rgba(76, 255, 145, 0.1);
+    color: #4cff91;
+    border: 1px solid rgba(76, 255, 145, 0.2);
+}
+
+.mgr-dashboard__task-status--blocker {
+    background: rgba(255, 89, 89, 0.1);
+    color: #ff5959;
+    border: 1px solid rgba(255, 89, 89, 0.2);
+}
+
+.mgr-dashboard__task-status--pending {
+    background: rgba(157, 128, 255, 0.1);
+    color: #9d80ff;
+    border: 1px solid rgba(157, 128, 255, 0.2);
+}
+
+/* ── Modal ── */
+.mgr-dashboard__modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.mgr-dashboard__modal {
+    background: #11092e;
+    border: 1px solid rgba(157, 128, 255, 0.2);
+    border-radius: 24px;
+    padding: 36px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.mgr-dashboard__modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 24px;
+}
+
+.mgr-dashboard__modal-field {
+    margin-bottom: 18px;
+}
+
+.mgr-dashboard__modal-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #8a8891;
+    margin-bottom: 8px;
+}
+
+.mgr-dashboard__modal-input,
+.mgr-dashboard__modal-select,
+.mgr-dashboard__modal-textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 14px;
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.mgr-dashboard__modal-input:focus,
+.mgr-dashboard__modal-select:focus,
+.mgr-dashboard__modal-textarea:focus {
+    border-color: #9d80ff;
+}
+
+.mgr-dashboard__modal-select option { background: #1a1726; }
+
+.mgr-dashboard__modal-textarea {
+    height: 80px;
+    resize: none;
+}
+
+.mgr-dashboard__modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+}

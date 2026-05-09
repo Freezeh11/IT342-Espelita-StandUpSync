@@ -7,13 +7,12 @@ import lombok.Data;
 @Table(name = "user_profiles")
 @Data
 public class UserProfile {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     private User user;
 
     @Column(columnDefinition = "TEXT")
