@@ -38,3 +38,8 @@
 * **auth/register**
 * **auth/login**
 * **user/me**
+cd backend
+.\mvnw test
+cd web
+npm install
+npm test
