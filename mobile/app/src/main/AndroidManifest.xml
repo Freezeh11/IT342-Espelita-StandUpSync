@@ -15,16 +15,16 @@
         android:theme="@style/Theme.StandupSync"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".DashboardActivity"
+            android:name=".dashboard.ui.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ui.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".auth.ui.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".auth.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
